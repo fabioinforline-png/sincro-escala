@@ -1,3 +1,6 @@
+from pathlib import Path
+
+
 funcionarios=[]
 sair_do_sistema=False
 def apresenta_menu():
@@ -12,8 +15,10 @@ def apresenta_menu():
     opçao_menu=input("Escolha uma opção: ")
     return opçao_menu
 
-def cadastra_funcionario():
+def cadastra_funcionario():  
     funcionario=input("digite o nome do funcionario: ")
+    with open(Path("BD") / "funcionario_bd.txt", "w", encoding="utf-8") as arquivo:
+        arquivo.write(funcionario)
     funcionarios.append(funcionario)
     print(f"o nome cadastrado foi: {funcionario} ")
     print("=========================================")
@@ -29,7 +34,9 @@ def cadastra_funcionario():
            
 def listar_funcinario():
     print("Listando funcionários") 
-
+    for idx, funcionario in enumerate(funcionarios, start=1):
+        print(f"{idx} - {funcionario}")
+        
 def Sair():
     print("saindo do sistema de gestão de escala 👋")    
 #=============================================================
@@ -44,6 +51,7 @@ while not sair_do_sistema:
             listar_funcinario()
         case "0":
             Sair()
+            break
         case _:
             # O '_' 
             print("Opção Inválida!")
