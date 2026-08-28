@@ -1,6 +1,6 @@
 from pathlib import Path
 
-path_bd=Path("sincro_escala/BD") / "funcionario_bd.txt", "a"
+path_bd=Path("sincro_escala/BD") / "funcionario_bd.txt"
 funcionarios=[]
 sair_do_sistema=False
 
@@ -11,7 +11,9 @@ def apresenta_menu():
     print("")
     print("1. Cadastrar funcionário👤")
     print("2. Listar funcionário 👥")
+    print("3. Excluir funcionário 🗑️")
     print("0. Sair ❌")
+
     print("")
     opçao_menu=input("Escolha uma opção: ")
     return opçao_menu
@@ -32,11 +34,24 @@ def cadastra_funcionario():
         cadastra_funcionario()
     if seguir_cadastro=="2":
         print("cadastro concluido")
-           
-def listar_funcinario():
+
+def listar_funcionario():
     with open(path_bd, "r",encoding="utf-8") as arquivo:
         for linha in arquivo:
             print(linha.strip())
+ 
+def excluir_funcionario():
+    listar_funcionario()
+    funcionario=input("Qual funcionário você deseja deletar: ")
+    with open(path_bd, "r",encoding="utf-8") as arquivo:
+        nomes=arquivo.readline()
+    
+    
+    with open(path_bd, "w",encoding="utf-8") as arquivo:
+        for linha in nomes:
+            if linha.strip()==funcionario:
+                linha=""
+            arquivo.write(linha)
         
 def Sair():
     print("saindo do sistema de gestão de escala 👋")    
@@ -49,7 +64,9 @@ while not sair_do_sistema:
         case "1":
             cadastra_funcionario()
         case "2":
-            listar_funcinario()
+            listar_funcionario()
+        case "3":
+            excluir_funcionario()
         case "0":
             Sair()
             break
